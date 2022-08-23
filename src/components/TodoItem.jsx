@@ -35,7 +35,4 @@ export default function TodoItem({todo, deleteTodo}) {
     </Paper>
   );
   }
-function deleteTodo(id) {
-  throw new Error("Function not implemented.");
-}
 
