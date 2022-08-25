@@ -7,49 +7,35 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import { Paper } from "@mui/material";
-import StarsIcon from "@material-ui/icons/Stars";
+import EditTodoDialog from "./EditTodoDialog";
 
-export default function TodoItem({ todo, deleteTodo, favoriteTodo }) {
+export default function TodoItem({ todo, deleteTodo, editTodo}) {
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const dialogHandler = () => {
+    setOpenDialog(!openDialog);
+  };
+
   return (
-    <Paper style={{ padding: "1em", flexDirection: "row" }}>
-      <ListItem
-        secondaryAction={
-          <IconButton
-            edge="end"
-            aria-label="delete"
-            onClick={() => deleteTodo(todo.id)}
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        disablePadding
-      >
+    <>
+      <EditTodoDialog editTodo={editTodo} open={openDialog} dialogHandler={dialogHandler} todo={todo} />
+      <Paper style={{ padding: "0.5em 0em" }}>
         <ListItem
           secondaryAction={
-            <IconButton
-              edge="start"
-              aria-label="favorite"
-              style={{ margin: "1em" }}
-              onClick={() => favoriteTodo(todo.id)}
-            >
-              <StarsIcon />
+            <IconButton edge="end" aria-label="delete" onClick={() => deleteTodo(todo.id)}>
+              <DeleteIcon />
             </IconButton>
           }
           disablePadding
         >
           <ListItemButton role={undefined} dense>
             <ListItemIcon>
-              <Checkbox
-                edge="start"
-                tabIndex={-1}
-                disableRipple
-                style={{ padding: "1em" }}
-              />
+              <Checkbox edge="start" tabIndex={-1} disableRipple style={{ padding: "1em" }} />
             </ListItemIcon>
-            <ListItemText primary={todo.text} />
+            <ListItemText primary={todo.text} onClick={() => setOpenDialog(true)} />
           </ListItemButton>
         </ListItem>
-      </ListItem>
-    </Paper>
+      </Paper>
+    </>
   );
 }

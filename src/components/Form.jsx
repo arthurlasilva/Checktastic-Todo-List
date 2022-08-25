@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 
@@ -9,7 +10,9 @@ export default function Form({ addTodo }) {
     const todoObj = { text: text, id: id };
     setId(id + 1);
     addTodo(todoObj);
+    document.getElementById("outlined-basic").value=null;
   };
+
 
   return (
     <Paper style={{ padding: "1em" }}>
